@@ -53,8 +53,28 @@ def terms_and_conditions(request, slug):
 	template = 'terms&Conditions/term_&_conditions.html'
 	return render(request, template, {'condition_text': condition_text})
 
+def get_ip(request):
+    try:
+        x_forward = request.META.get("HTTP_X_FORWARDER_FOR")
+        if x_forward:
+            ip = x_forward.split(",")[0]
+        else:
+            ip = request.META.get("REMOTE_ADDR")
+    except:
+        ip = ""
+    return ip
+
+
 def newsletter(request):
 	form = NewsletterForm(request.POST or None)
+	# try:
+	# 	x_forward = request.META.get("HTTP_X_FORWARDER_FOR")
+	# 	if x_forward:
+	# 	    ip = x_forward.split(",")[0]
+	# 	else:
+	# 	    ip = request.META.get("REMOTE_ADDR")
+	# except:
+	# 	ip = ""
 	data = {}
 	if form.is_valid():
 		email = form.cleaned_data.get('email')

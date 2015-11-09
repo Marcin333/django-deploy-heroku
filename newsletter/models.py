@@ -28,6 +28,7 @@ class Condition(models.Model):
 
 class Newsletter(models.Model):
 	email = models.EmailField()
+	# user_ip = models.CharField(max_length=120, default="ABC")
 	timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
 
 	def __unicode__(self):
