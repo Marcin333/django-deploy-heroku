@@ -1,1 +1,1 @@
-web: gunicorn ecommerce2.wsgi 
+web: python manage.py run_gunicorn
