@@ -37,23 +37,6 @@ TEMPLATES = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/1.8/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'Europe/Warsaw'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
-# urls for static files and media
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
@@ -63,28 +46,3 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static', 'media')
 # STATICFILES_DIRS are gonna to go to the STATIC_ROOT after collectstatic
 STATICFILES_DIRS = (os.path.join(os.path.dirname(BASE_DIR),'static', 'static_files'),)
 
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
-CRISPY_CLASS_CONVERTERS = {'textinput': "textinput inputtext"}
-CRISPY_FAIL_SILENTLY = not DEBUG
-
-# Email setup
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'kmarcin827@gmail.com'
-EMAIL_HOST_PASSWORD = 'qawsedrf!'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-# Redux registration
-DEFAULT_FROM_EMAIL = "<kmarcin827@gmail.com>"
-ACCOUNT_ACTIVATION_DAYS = 7
-REGISTRATION_AUTO_LOGIN = True
-LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/'
-SITE_ID = 1
-
-
-# Braintree settings
-
-BRAINTREE_PUBLIC = '76f8d4y4vtzrdy9z'
-BRAINTREE_PRIVATE = 'd408523feca4e8dfd63f8e01972055a2'
-BRAINTREE_MERCHANT_ID = '8kqgzwy8xhpmk5zy'
-BRAINTREE_ENVIRONMENT = 'Sandbox'
