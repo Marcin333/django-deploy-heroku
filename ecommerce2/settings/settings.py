@@ -4,7 +4,6 @@ from django.conf import settings
 # specify the name of your settings module
 os.environ['DJANGO_SETTINGS_MODULE'] = 'ecommerce2.settings'
 
-
 DATABASES = settings.DATABASES
 
 # Parse database configuration from $DATABASE_URL
