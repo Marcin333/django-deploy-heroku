@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'favicon.ico' %}">
+
+    <title>Ecommerce2 {% block head_title %}{% endblock %}</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Custom css -->
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <style>
+      /* Popover Body */
+      .popover-content {
+          padding: 5px 3px;
+          text-align:center;
+          width:150px;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+      {% block custom_css %}
+      {% endblock %}
+    </style>
+  </head>
+
+  <body>
+    {% include 'navbar.html' %}
+      {% if messages %}
+      <div class="container">
+        <div class="alert alert-success text-center fade in">
+          {% for message in messages %}
+            <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      <div class="row">
+        {% block jumbotron %}
+        {% endblock %}
+      </div>
+
+    <div class="container" style="min-height:600px;">
+      {% block content %}
+      {% endblock %}
+    </div>
+      <hr>
+    {# include "modal.html" #}
+    {% include "footer.html" %}    
+    <!-- /container -->
+    <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <!--<script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>-->
+  <!-- Latest compiled JavaScript -->
+  <!-- Latest compiled JavaScript -->
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="{% static 'js/custom.js' %}"></script>
+  <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+  <script type="text/javascript">
+    function outOfStock(){
+    document.getElementById("outOfStock").disabled = true;
+    }
+    // badgeNavbarCount ajax
+    function badgeNavbarCount(){
+        var badge = $("#cart-count-badge");
+        $.ajax({
+          type: 'get',
+          url: '{% url "cart_items_count" %}',
+          success: function(data){
+            badge.text(data.count); 
+            $('a[data-toggle="popover"]').data('bs.popover').tip().find(".popover-content").html(badge.text(data.count));
+
+          },
+          error: function(error, response){
+            badge.text('{% include "products/popover.html" %}');
+          }
+        });
+      }
+    $(document).ready(function(){
+      badgeNavbarCount();
+    });
+
+    // popover
+    $(document).ready(function(){
+        $('a[data-toggle="popover"]').popover({
+          trigger: 'hover',
+          placement: "bottom",
+          content: '{% include "products/popover.html" %}'
+        }); 
+    });// end
+ 
+    // Newsletter ajax
+    $(document).ready(function() {
+     function newsletter(){
+      $("#sendMarketingForm").click(function(event){
+        event.preventDefault();
+        // function which prevents default behavior
+        var mForm = $("#sendForm").serialize(); // .serialize() data from form with id.
+        // $("div").text($("form").serialize());
+         // console.log(mForm);
+         $.ajax({ // ajax function call
+              type: "POST",
+              url: "{% url 'ajax_newsletter' %}",
+              data: mForm,
+              dataType: 'json',
+              success: function(data){
+                // console.log(data)
+                $('#id_email').val('');
+                  $("#emailMessage").html("<p id='newsletter'> <i class='glyphicon glyphicon-ok-circle'>  </i>" + data.message+ "</p>").show();
+                  setTimeout(function(){
+                    $("#emailMessage").fadeOut();
+                  }, 1400);
+                // console.log('success');
+                 // $("#marketingModal").modal("hide");
+              },
+              error: function(data){
+                console.log(data)
+                data = data.responseJSON,$("#emailMessage")
+                // console.log(data.email)
+                $("#emailMessage").html("<p id='newsletter' style='color:red;'> <i class='glyphicon glyphicon-exclamation-sign'> </i>" + data.email + "</p>").show();
+              },
+            });
+           });
+        }
+      newsletter();
+     });
+
+    
+      // });
+      // function showModal(){
+      //   $("#marketingModal").modal("show");
+      //   }
+      //   // setTimeout(showModal, 5000);
+      // showModal();
+     
+      {% block jquery %}
+
+      {% endblock %}
+
+  </script>
+  </body>
+</html>

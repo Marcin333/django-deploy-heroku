@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+{{object_list}}
+  {% for object in object_list %}
+  	{% for item in object.cart.items.all %}
+	  <p>{{item.title}}</p>
+  	{% endfor %}
+  {% endfor %}
+{% endblock content %}

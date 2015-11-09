@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% for object in object_list %}
+    <table class="table">
+      <tr>
+        <td>
+          <a href="{{object.get_absolute_url}}">{{object.title}}</a> {# url 'product_detail_view' pk=object.pk #}
+        </td>
+        <td>
+          {% if object.inventory %}{{object.inventory}}{% else %} - {% endif %}
+        </td>
+      </tr>
+    </table>
+    <form class="form-horizontal" action="" method="post">{% csrf_token %}
+      {{formset.management_form}}
+      {% for form in formset %}
+        {{form.instance.product.title}}
+        {{form.instance.title}}
+        {{form.as_p}}
+      {% endfor %}
+      <input type="submit" value="Update" class="btn">
+    </form>
+  {% endfor %}
+  {{now}}
+{% endblock %}

@@ -1,0 +1,17 @@
+braintree==3.20.0
+decorator==4.0.2
+Django==1.8.4
+django-crispy-forms==1.5.2
+django-extensions==1.5.6
+django-registration-redux==1.2
+ipython==4.0.0
+ipython-genutils==0.1.0
+path.py==8.1.1
+pexpect==3.3
+pickleshare==0.5
+Pillow==2.9.0
+requests==2.8.0
+simplegeneric==0.8.1
+six==1.9.0
+sorl-thumbnail==12.3
+traitlets==4.0.0

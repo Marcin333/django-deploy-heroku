@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="content-fluid">
+	<div id="login-overlay" class="modal-dialog ">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">Add Your Address</h4>
+          </div>
+          <div class="modal-body ">     
+			<form action="" method="POST" class="form-horizontal">{% csrf_token %}
+				{% crispy form form.helper %}
+			</form>
+		</div>
+	  </div>
+	</div>
+</div>
+{% endblock content %}

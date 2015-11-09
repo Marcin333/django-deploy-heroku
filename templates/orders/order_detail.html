@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% include 'orders/order_checkout_summary.html' with order=order %}<br/>
+  <a class="btn btn-custom btn-info btn-md pull-right" href="javascript:window.print();">&nbsp;Print&nbsp;</a>
+{% endblock content %}

@@ -1,0 +1,4 @@
+Hell,
+We will answer you soon.
+Regards,
+Django Ecommerce Team

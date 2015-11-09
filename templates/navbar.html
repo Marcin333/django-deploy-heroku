@@ -1,0 +1,82 @@
+{% load staticfiles %}
+<nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{% url 'home' %}">CFT Ecommerce</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <form method='get' class="navbar-form navbar-left " role="search" action="{% url 'products' %}">
+           <div class="search input-group " role="search" id="the-basics">
+             <input name="q" type="search" class="form-control" placeholder="Search"  />
+             <span class="input-group-btn">
+               <button class="btn btn-default" type="submit">
+                 <span class="glyphicon glyphicon-search"></span>
+                 <span class="sr-only">Search</span>
+               </button>
+             </span>
+           </div>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="nav-border-bottom"><a href="{% url 'home' %}"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
+            <li class="nav-border-bottom"><a href="{% url 'wishlist' %}"  alt="wishlist"><span class="glyphicon glyphicon-heart" ></span>&nbsp;Wish</a></li>
+            <li class="nav-border-bottom"><a href="{% url 'cart' %}" id="mojeid" data-toggle="popover" data-placement="bottom" data-content='' data-html="true"> <i class="fa fa-shopping-cart fa-lg"></i>&nbsp;Cart</a></li>
+            
+            {% if not request.user.is_authenticated and not 'accounts/login' in request.get_full_path %}
+
+              <!-- <li><p class="navbar-text">Already have an account?</p></li> -->
+              <li  class="nav-border-bottom" class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
+                <ul id="login-dp" class="dropdown-menu">
+                <li id="nav-border-bottom">
+                  <div class="row">
+                    <div class="col-md-12">
+
+                    <form class="form" role="form" method="post" action="{% url 'auth_login' %}" accept-charset="UTF-8" id="login-nav"> {% csrf_token %}
+                    <div class="form-group">
+                     <label class="sr-only" for="exampleInputEmail2">User name</label>
+                     <input type="text" name="username" class="form-control" placeholder="Username" id="exampleInputEmail2">
+                    </div>
+                    <div class="form-group">
+                     <label class="sr-only" for="exampleInputPassword2">Password</label>
+                     <input type="password" name="password" class="form-control" placeholder="Password" id="exampleInputPassword2">
+                     <div class="help-block text-right"><a href="{% url 'auth_password_reset' %}">Forget the password ?</a></div>
+                    </div>
+                    <div class="form-group">
+                     <button type="submit" class="btn btn-warning btn-block">Login</button>
+                    </div>
+                    <div class="checkbox">
+                     <label>
+                     <input type="checkbox"> keep me logged-in
+                     </label>
+                    </div>
+                    </form>
+                    </div>
+                    <div class="bottom text-center">
+                    New here ? <a href="{% url 'registration_register' %}">Register</a>
+                    </div>
+                  </div>
+                </li>
+                </ul>
+              </li>
+           {% else %}
+            <li><a href="{% url 'auth_logout' %}"><i class="fa fa-sign-out"></i>Logout</a></li>
+           {% endif %}
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+
+{% comment %}
+  <div class="row">
+             <a href="#" data-toggle="popover" data-placement="bottom" data-content='{% include "products/tooltip.html" %}' data-html="true">
+                Popover
+              </a>
+{% endcomment %}
+<!--  data-toggle="modal" data-target="#marketingModal" -->

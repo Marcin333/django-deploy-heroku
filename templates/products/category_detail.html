@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+<div class="row">
+  {% for product in products %}
+    <div class="col-lg-4 col-sm-4 col-xs-12">
+    {% include "products/product_thumbnail.html" with product=product price='True' %}
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
+  {% cycle '' '' '' '</div><div class="row">' %}

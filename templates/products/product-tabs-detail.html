@@ -1,0 +1,70 @@
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#home">Product Detail</a></li>
+  <li><a data-toggle="tab" href="#menu1">Delivery</a></li>
+  <li><a data-toggle="tab" href="#menu2">Return</a></li>
+  <li><a data-toggle="tab" href="#menu3">Related</a></li>
+  <li><a data-toggle="tab" href="#menu4">Comments</a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="home" class="tab-pane fade in active">
+    <h3></h3>
+    {% if object.description %}
+    <p>{{object.description|linebreaks}}</p>
+    {% endif %}
+  </div>
+  <div id="menu1" class="tab-pane fade">
+    <h3></h3>
+ 
+    <div id="countdownShipping">
+    <div id="countdownShipping">
+        <p>Same day shipping for today is not possible</p>
+    </div>
+    </div>
+
+    <p>We do try and despatch all orders received by 2pm the same day. During busy periods or sale times, despatch could take a little longer.</p>
+    <p><strong>Standard UK Delivery (2-3 working days) £2.95</strong></p>
+    <p><strong>Next Day UK Delivery (Mon - Thu) £4.99</strong></p>
+    <p><strong>Republic of Ireland (Up to 4 Working Days) £4.99</strong></p>
+    <p><strong>Europe Delivery (7-14 Working Days) £6.99</strong></p>
+    <p><strong style="font-size: 12px;">USA &amp; Canada Standard <strong>(7-14 Working Days)</strong>&nbsp;£6.99</strong></p>
+    <p><strong>USA &amp; Canada Express (<strong>1-2 Working Days)</strong> £12.99</strong></p>
+    <p><strong>Australia &amp; New Zealand Standard <strong>(7-14 Working Days)</strong>&nbsp;£6.99</strong></p>
+    <p><strong>Australia &amp; New Zealand Express <strong>(<strong>1-2 Working Days)</strong></strong>&nbsp;£12.99</strong></p>
+    <p><strong>Rest of World (<strong>7-14 Working Days)</strong> £9.99</strong></p>
+    <div><strong style="font-size: 12px;">FREE DELIVERY ON ALL UK ORDERS OVER £40</strong></div>
+    <p>Please <a title="go to product delivery page" href="#">click here</a> for further information</p>
+
+  </div>
+  <div id="menu2" class="tab-pane fade">
+	<br>
+	<p>You can return any item to us within 14 days of receipt for a refund/exchange providing it is in an unused condition and original packaging.&nbsp;</p>
+	<p>Please <a title="go to returns page" href="#">click here</a> for further information</p>
+  </div>
+  <div id="menu3" class="tab-pane fade">
+   <br>
+    <h2>Related products</h2>
+    <div class="row">
+      {% for product in related %}
+        <div class="col-xs-2 col-sm-2 col-md-2">
+          <a href="{{product.get_absolute_url}}" class="thumbnail">
+          {% if product.get_image_url %}
+          <div style="vertical-align:middle;">
+          <div style="background-image:url('{{product.get_image_url }}');background-size:contain;background-position:center;width:100%;height:180px; background-repeat: no-repeat;" title="{{product.title}}" alt="{{product.title}}">
+          </div>
+          </div>         
+          {% endif %}
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div id="menu4" class="tap-pane fade">
+    <p>No comments</p>
+
+  </div>
+</div>
+
+
+      
+  

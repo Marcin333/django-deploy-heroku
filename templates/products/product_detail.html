@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+{% load staticfiles  %}
+<script type="text/javascript">
+  {% block jquery %}
+  
+  // cart ajax
+  $("#form-submit").click(function(event){
+    event.preventDefault();
+    var formData = $("#form-itself").serialize();
+    // console.log(formData);
+    $.ajax({
+      type: "GET", // "POST"
+      url: "{% url 'cart' %}",
+      data: formData,
+      success: function(data) {
+        // $("#jquery-message").text("Added " + data.item_added + " Deleted " + data.deleted);
+        showFlashMessage(data.flash_message);
+        badgeNavbarCount();
+      },
+      error: function(response, error) {
+        $("#form-itself").submit();
+      }
+    })
+  });
+
+  // wishlist ajax
+  {% if request.user.is_authenticated %}
+  $('#wish-submit').click(function(event){
+    event.preventDefault();
+    var wishFormData = $('#wish-form').serialize();
+    $.ajax({
+      type: 'GET',
+      url: '{% url "wishlist" %}',
+      data: wishFormData,
+      success: function(data){
+        showFlashMessage(data.flush_message);
+      },
+      error: function(response, error){
+        $("#wish-submit").submit();
+      }
+    })
+  });
+  
+  {% endif %}
+
+  {% endblock %}
+</script>
+<!-- ****** custom css ******** -->
+<style>
+{% block custom_css %}
+  #price {
+    text-align:right;
+    padding-bottom: 3px;
+  }
+  input#qty {
+    width: 60%;
+  }
+
+  a, a:hover, a:visited {
+    color:inherit;
+    text-decoration: none;
+  }
+  .fa-facebook-official{ color:#3b5998;}
+  .fa-twitter { color:#1dcaff;}
+  .fa-google-plus-square {color:#d62d20;}
+  .share-link a {
+    text-decoration: none;
+  }
+  td .btn-link {
+    font-weight: 400;
+    color: inherit; 
+    border-radius: 0;
+    padding:0;
+  }
+  td .btn-link:visited {
+    text-decoration: none;
+    color:inherit;
+  }
+  .nav-tabs>li>a, .btn-link:hover  {
+    text-decoration: none;
+    color: inherit;
+  }
+  .pl {
+    margin:4%;
+  }
+
+{% endblock %}
+</style>
+
+{% block content %}
+<div id="jquery-massage">
+
+</div>
+<div class="row">
+  <div class="col-sm-4">
+      {% if object.productimage_set.count > 0 %}
+       {# {{object.productimage_set.all}} #}
+      {# {% if object.get_image_url %} #}
+      {% for img in object.productimage_set.all %}
+        {% if forloop.first %}
+          <a href="#" data-toggle="modal" data-target=".bs-example-modal-sm">
+            <div class="col-sm-12">
+            <img height="90%" width="90%" class="img-responsive img-thumbnail" id="img" src="{{ img.image.url }}" alt="{{img.product.title}}" title="{{img.product.title}}" />
+            </div> 
+          </a>
+          {% include "products/image_modal.html" %}
+      {% endif %}
+      {% endfor %}
+      {% endif %} 
+      <div class="row">
+          {% if object.productimage_set.all %}
+            {% for img in object.productimage_set.all %}
+              {% if forloop.counter > 1 %}
+                <div class="col-sm-3 pl">
+                  <!--<a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"> -->
+                  <img class="img-responsive img-thumbnail" id="img" src="{{ img.image.url }}" alt="{{img.product.title}}" title="{{img.product.title}}" />
+                  <!--</a>-->
+                </div>
+                {# include "products/image_modal.html" #}
+              {% endif %}
+            {% endfor %}
+          {% endif %} 
+      </div>   
+  </div>
+  <div class="col-sm-8">
+    <h2 class="pull-left">{{object.title}}</h2>
+    <form id="form-itself" class="form-inline" method="get" action="{% url 'cart' %}" role="form"> 
+      {% if object.variation_set.count > 1 %}
+         <h2 id="price">
+          {% if object.variation_set.sale_price %}
+          {{object.variation_set.sale_price}}
+          <small class="sale-price">&pound;{{object.variation_set.price}}</small>
+          {% else %}
+          &pound;{{object.variation_set.price}}
+          {% endif %}
+        </h2> 
+        <div class="well clearfix">
+        <label class="control-label" for="qty">Qty:&nbsp;</label>
+        <div class="form-group form-group-1">   
+          <input id="qty" type="number" name="qty" value="1" min="1" class="form-control">
+        </div>
+        <label class="control-label" for="variation">Variation:&nbsp;</label>
+        <div class="form-group">
+        
+          <select name="item" class="form-control variation_option" id="variation">
+          {% for var_obj in object.variation_set.all %}
+              <option  data-price="{{var_obj.price}}" data-sale-price="{{var_obj.get_price}}" value="{{var_obj.id}}">{{var_obj}}</option>
+          {% endfor %}
+          </select>
+        </div>
+        </div><!-- the end of well --> <br>
+      {% else %}
+         <h2 id="price">
+          {% if object.variation_set.first.sale_price %}
+          {{object.variation_set.first.sale_price}}
+          <small class="sale-price">&pound;{{object.variation_set.first.price}}</small>
+          {% else %}
+          &pound;{{object.variation_set.first.price}}
+          {% endif %}
+        </h2> 
+        <div class="well clearfix">
+        <label class="control-label" for="qty">Qty:&nbsp;</label>
+        <div class="form-group form-group-1">   
+          <input id="qty" type="number" name="qty" value="1" min="1" class="form-control">
+        </div>
+        </div>
+        <input type="hidden" name="item" value="{{object.variation_set.first.id}}">
+        <br>
+      {% endif %}    
+      
+         <button id="form-submit" type="submit" value="Add to cart" class="btn btn-warning btn-lg" title="Add to cart"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;&nbsp;Add to cart</button>
+    </form>
+    <br>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+      <tr>
+      {% if object.variation_set.all %}
+        {% for var in object.variation_set.all  %}
+          {% if var.inventory > 0 %}
+            {% if forloop.first %}
+              <td class="col-sm-4" title="In stock"><span class="glyphicon glyphicon-ok-circle gi-2x"></span>&nbsp;In stock</td>
+            {% endif %}
+          {% else %}
+              <td title="Out of stock"><span class="glyphicon glyphicon-remove-circle gi-2x"></span>&nbsp;Out of stock
+              </td>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+              <td class="col-sm-4">
+              <form id="wish-form" method="get" action="{% url 'wishlist' %}" class="form-inline">
+                <div class="form-group">
+                  <input type="hidden" name="item" value="{{object.variation_set.first.id}}">
+                  <span class="glyphicon glyphicon-heart gi-2x"></span>
+                  <input type="submit" value="Wishlist" class="btn btn-link" id="wish-submit" title="Wishlist">
+                </div>
+              </form>
+              </td>
+              <!--<a href="#" class="btn btn-link btn-wish"><span class="glyphicon glyphicon-heart-empty gi-2x"></span>&nbsp;Add to wishlist</a>-->
+              <td class="col-sm-4"><a href="javascript:window.print();" class="btn btn-link" title="Print"><span class="glyphicon glyphicon-print gi-2x gi-special"></span>&nbsp;Print</a></td>
+      </tr>
+    </table>
+    </div>    
+    {% include "products/product-tabs-detail.html" with object=object %}
+      <hr>
+    <h4>
+      Share
+    </h4>
+    <p class="share-link">
+      <a href="https://www.facebook.com/sharer/sharer.php?u={{request.build_absolute_uri}}" title="Share on facebook">
+        <i class="fa fa-3x fa-facebook-official"></i>
+      </a>&nbsp;
+      <a href='https://plus.google.com/share?url={{request.build_absolute_uri}}' title="Share on gogle plus">
+      <i class="fa fa-3x fa-google-plus-square "></i>
+      </a>&nbsp;
+      <a href="#"> <i class="fa fa-3x fa-twitter" title="Share on twitter"></i></a>&nbsp; 
+      <a href="#"> <i class="fa fa-3x fa-pinterest" title="Share on pinterest"></i> </a>&nbsp;
+      <a href="#"><i class="fa fa-instagram fa-3x" title="Share on instagram"></i></a>&nbsp; 
+    </p>
+  </div>
+</div>
+  <hr><br>
+    
+{% endblock %}
+
+
+{% comment %}
+ {% if object.variation_set.all %}
+          {% for var in object.variation_set.all %}
+             {% if var.inventory < 1 or var.inventory == None %}
+               {% if forloop.first %}
+                 <a href="#" class="btn btn-warning btn-lg disabled" title="Sorry, product is out of stock"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;&nbsp;Out of stock </a>
+               {% endif %}
+             {% else %}
+ {% endif %}
+
+          {% endfor %}
+       {% endif %} 
+glyphicon glyphicon-heart
+  <h2 id="price">
+        {% if object.variation_set.first.sale_price %}
+        {{object.variation_set.first.sale_price}}
+        <small class="sale-price">&pound;{{object.variation_set.first.price}}</small>
+        {% else %}
+        &pound;{{object.variation_set.first.price}}
+        </h2>
+     
+        {% endif %}
+
+
+        <img class="img-thumbnail" src="{{product.get_image_url }}" alt="{{product.title}}" title="{{product.title}}" />
+          {% else %}
+          <img class="img-responsive" src="{% static '/media/placeholder.svg' %}" alt="" />
+          {{product.title}}
+          
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo sed odit quidem iure debitis quod veritatis dolorum rem quibusdam autem, molestias, laudantium tempore, asperiores, beatae porro reiciendis. 
+
+Cupiditate, quo dolore. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque voluptas est hic, inventore obcaecati eum quaerat velit voluptatibus provident. Ea blanditiis possimus voluptatum voluptas aliquam explicabo, totam, perferendis laboriosam cumque. 
+{% endcomment %}
+

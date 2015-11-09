@@ -1,0 +1,70 @@
+{% load staticfiles %}
+<footer>
+    <div class="container">
+    <div class="footer" id="footer">
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-6 col-xs-12" >
+                <h4>Sign Up Newsletter</h4>
+                <form method='POST' action='{% url "ajax_newsletter" %}' id="sendForm" class="form" role="form" >{% csrf_token %}
+                <div class="input-group">
+                 <span class="input-group-addon" id="basic-addon1">@</span>
+                <input id="id_email" class='form-control' maxlength="200" name="email" type="email" placeholder="Your Email" required aria-describedby="basic-addon1">
+                </div>
+                <div class="form-group"><br>
+                <input type='submit' class='btn btn-warning' id="sendMarketingForm" value="Submit" />
+                </div>
+                </form>
+				<p id="emailMessage"></p><br>
+            </div>
+             <div class="col-lg-4  col-md-4 col-sm-6 col-xs-12"> 
+            	<ul class="nav delivery">              
+                <li>UK Delivery <span class="pull-right">£2.95</span></li>
+                <li>UK Guaranteed Next Day Delivery <span class="pull-right">£4.99</span></li>
+                <li>Europe Delivery <span class="pull-right">£6.99</span></li>
+                <li>International Delivery (Non EU) <span class="pull-right">£9.99</span></li>
+                <li>Express International USA <span class="pull-right">£12.99</span></li>
+                <li>Express International Canada <span class="pull-right">£12.99</span></li>
+                <li>Express International Australia <span class="pull-right">£12.99</span></li>
+                <li>Express International New Zealand <span class="pull-right">£12.99</span></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
+            	<div>
+        		<ul class="nav ul-border">
+        		  {% for i in condition %}
+        		  <li><a href="{{i.get_absolute_url}}">{{i.title}}</a></li>
+        		  {% endfor %}
+        		  <li><a href="{% url 'contact' %}">Contact Us</a></li>	  
+        		</ul>
+            	</div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6 text-right">
+                <ul class="nav ul-border">
+                    <li >  <a href="#"> <i class=" fa fa-2x fa-facebook"> </i>    Facebook</a> </li>
+                    <li> <a href="#"> <i class="fa fa-2x fa-twitter"></i>  Twitter</a> </li>
+                    <li> <a href="#"> <i class="fa fa-2x fa-google-plus"></i>  Google +</a> </li>
+                    <li> <a href="#"> <i class="fa fa-2x fa-pinterest"></i>  Pinterest</a> </li>
+                    <li> <a href="#"> <i class="fa fa-2x fa-youtube"></i>  Youtube</a> </li>
+                </ul>
+            </div>
+        </div>
+        <!--/.row--> 
+    </div>
+    <!--/.container--> 
+</div>
+<!--/.footer-->
+<div class="footer-bottom">
+    <div class="container">
+        <p class="pull-left"> Copyright © 2015. All right reserved. </p>
+        <div class="pull-right">
+            <ul class="nav nav-pills payments">
+            	<li><i class="fa fa-cc-visa"></i></li>
+                <li><i class="fa fa-cc-mastercard"></i></li>
+                <li><i class="fa fa-cc-amex"></i></li>
+                <li><i class="fa fa-cc-paypal"></i></li>
+
+			</ul>
+		</div>
+	</div>
+</div>
+</footer>

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+ 
+  <div id="login-overlay" class="modal-dialog ">
+      <div class="modal-content">
+          <div class="modal-header">
+          {% if title %}
+              <h4 class="modal-title" id="myModalLabel"> <h1 class="{% if text_align_center %}text-align-center{% endif %}">{{ title }}</h1></h4>
+          {% endif %}
+          </div>
+          <div class="modal-body ">     
+            <form class="form-horizontal" action="" method="post" role="form">{% csrf_token %}
+              {% crispy form form.helper %}
+            </form>
+         </div>
+    </div>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,24 @@
+{% load staticfiles %}
+
+<div class="col-sm-12">
+<div class="thumbnail">
+  <a href="{{product.get_absolute_url}}" >
+    {% if product.get_image_url %}
+    <div style="vertical-align:middle;">
+    <div style="background-image:url('{{product.get_image_url }}');background-size:contain;background-position:center;width:100%;height:180px; background-repeat: no-repeat;" title="{{product.title}}" alt="{{product.title}}">
+    </div>
+    </div>
+    {% else %}
+    <img class="img-responsive" src="{% static '/media/placeholder.svg' %}" alt="Placeholder" />
+    {% endif %}
+  </a>
+  <div class="caption">
+    <hr>
+    <h5>{{product.title}}</h5>
+    <hr>  
+    {% if price == 'True' %}{{product.variation_set.first.get_html_price}}{% endif %}
+    <p class="text-right"><a href="{{product.get_absolute_url}}" class="btn btn-warning">Buy</a></p>
+  </div>
+
+</div>
+</div>

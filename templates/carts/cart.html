@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+<script>
+{% block jquery %}
+  $('.item-qty').change(function(){
+    // $('.btn-update').css('visibility', 'visible');
+    var item = $(this).prev("input[type='hidden']").val();
+    var qty = $(this).val();
+    data = {
+      item: item,
+      qty: qty
+    },
+
+    $.ajax({
+        type: 'get',
+        url: "{% url 'cart' %}",
+        data: data,
+        success: function(data){
+          $("#jquery-message").text("Added " + data.item_added + " Deleted " + data.deleted)
+    			if (data.deleted){
+    				$("#item-"+item).fadeOut();
+    				$("#subtotal").text(data.subtotal);
+            $("#taxtotal").text(data.tax_total);
+            $("#cart-total").text(data.cart_total);
+    			} else {
+    				$("#item-line-total-"+item).text(data.line_total);
+    				$("#subtotal").text(data.subtotal);
+            $("#taxtotal").text(data.tax_total);
+            $("#cart-total").text(data.cart_total);
+    			}
+    			if (data.item_count == 0 ) {
+    				$(".table").fadeOut()
+    				var template = "<div class='col-sm-4 col-sm-offset-4 text-center'>"+"<h1 id='empty'>Your cart is empty</h1>"+
+            "<h4><a href='{% url "home" %}'>Continue shopping</a></h4></div>";
+    				$(".main-content").html(template);
+    			}
+            // jquery flash message
+            var message = ""
+            if (data.item_added){
+              message = "Item added";
+            } else if (data.deleted){
+              message = "Item deleted";
+            } else {
+              message = "Item updated";
+            }
+            showFlashMessage(message);
+            badgeNavbarCount();
+          },
+
+        error: function(response, error){
+          $("#add-form").submit();
+        }
+    });
+  });
+//  $('.item-qty').change(function(){
+  //  $(this).next('.btn-update').fadeIn();
+//  })
+
+{% endblock %}
+</script>
+<style>
+  {% block custom_css %}
+    .gi-2x {
+      color:#8F1C00;
+    }
+    #input-qty {
+      width: 50%;
+    }
+  {% endblock %}
+</style>
+
+{% block content %}
+<div class="row main-content">
+{% if object.cartitem_set.count < 1 %}
+   {% include "carts/empty_cart.html" %}
+{% else %}
+  <h3>Cart</h3>
+ 
+  <table class="table table-hover table-condensed" id="cart">
+    <thead>
+      <th style="width:40%">Item</th>    
+      <th style="width:20%">&nbsp;Qty</th>
+      <th style="width:20%">Price</th>                  
+      <th style="width:20%">Remove</th>
+    </thead>
+    {% for item in object.cartitem_set.all %}
+    <tbody>
+    <tr id="item-{{item.item.id}}">
+      <td data-th="Item">{{item.item.get_title}}</td>
+      <td data-th="Qty">
+        <form class="form-inline" action="." method="get" id="add-form">
+          <div class="form-group-sm">
+              <input type="hidden" name="item" value="{{item.item.id}}">
+              <input type="number" id="input-qty" class="item-qty form-control" value="{{item.quantity}}" >
+              <!--<input type="submit" class="btn btn-update" value="Update" style="visibility: hidden;">-->
+          </div>
+        </form>
+      </td>
+      <td data-th="Price" id="item-line-total-{{item.item.id}}">{{item.line_item_total}}</td>
+      <td data-th="Remove" class="action"><a href="{{item.remove}}"><span class="glyphicon glyphicon-trash gi-2x" title="Remove" alt="Remove"></span></a></td>
+    </tr>
+    </tbody>
+
+    {% endfor %}
+    <tfoot>
+      <tr>
+      <td colspan="4" class="text-right" >
+        Subtotal: <span id="subtotal">{{object.subtotal}}</span>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="text-right">
+        Tax total (Estimated): <span id="taxtotal">{{object.tax_total}}</span>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="text-right" >
+        Total:{{object.cart_total}} <span id="cart-total">{{object.total}}</span>
+      </td>
+    </tr>
+    <tr>
+    <tr>
+      <td><a href="{% url 'home' %}" class="btn btn-success"><i class="fa fa-angle-left" role="button"></i>&nbsp;Continue Shopping</a>
+      </td>
+  
+    <td colspan="2" class="hidden-xs"></td>
+    <td colspan="1" class="text-right">
+      <a href="{% url 'checkout_view' %}" class="btn btn-success">Checkout&nbsp;<i class="fa fa-angle-right"></i></a>
+    </td>
+    </tr>
+    
+  </tfoot>
+  </table>
+
+  {% endif %}
+</div>
+{% endblock %}

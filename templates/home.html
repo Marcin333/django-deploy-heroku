@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+<style>
+{% block custom_css %}
+
+{% endblock %}
+</style>
+{% block jumbotron %}
+{% if featured_image %}
+  <div class="jumbotron">
+    <div class="container">
+    <div class="row">
+      <div class='col-sm-6 {% if featured_image.text_right %}pull-right{% endif %}'>
+        <h1>{{featured_image.product.title}}</h1>
+        <p>{{featured_image.product.description}}</p>
+        <p>
+        <a class="btn btn-lg btn-primary" href="" role="button">Join Us &raquo;</a>
+        </p>
+      </div>
+      {% if not featured_image.image.url %}
+        <div class='col-sm-6'>
+         <img class="img-responsive" src="{{featured_image.image.url}}" alt="featured_image.title" />
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+{% endblock %}
+{# <h3>Recommended products</h3> #}
+{% block content %}
+<div class="row">
+  <h1></h1> 
+  {% include "products/products.html" with object_list=products  %} <!-- col_class_set='col-sm-2'  -->
+</div> 
+{% endblock %}
+
+{% comment %}
+ <div class="row">
+   <h3>Featured products</h3>
+   {% include "products/products.html" with object_list=products2  %} <!-- col_class_set='col-sm-2'  -->
+ </div>
+ {% endcomment %} 

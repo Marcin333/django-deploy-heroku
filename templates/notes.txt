@@ -1,0 +1,127 @@
+<!--    /       newsletter.views.home   home
+/accounts/login/        django.contrib.auth.views.login auth_login
+/accounts/logout/       django.contrib.auth.views.logout        auth_logout     login_required
+/accounts/password/change/      django.contrib.auth.views.password_change       auth_password_change
+/accounts/password/change/done/ django.contrib.auth.views.password_change_done  auth_password_change_done       login_required
+/accounts/password/reset/       django.contrib.auth.views.password_reset        auth_password_reset
+/accounts/password/reset/complete/      django.contrib.auth.views.password_reset_complete       auth_password_reset_complete     login_required
+/accounts/password/reset/confirm/<uidb64>/<token>/      django.contrib.auth.views.password_reset_confirm        auth_password_reset_confirm
+/accounts/password/reset/done/  django.contrib.auth.views.password_reset_done   auth_password_reset_done        login_required
+/accounts/register/     registration.backends.simple.views.RegistrationView     registration_register
+/accounts/register/closed/      django.views.generic.base.TemplateView  registration_disallowed
+/accounts/register/complete/    django.views.generic.base.TemplateView  registration_complete -->
+
+    <!-- Login via
+    <div class="social-buttons">
+    <a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
+    <a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i> Twitter</a>
+    </div>   or -->
+    <!-- <form class="navbar-form navbar-right" action="{% url 'auth_login' %}" method="post" role="form">{% csrf_token %}
+      <div class="form-group">
+        <input type="text" name="username" class="form-control" placeholder="Username">
+        <input type="password" name="password" class="form-control" placeholder="Password">
+      </div>
+      <button type="submit" class="btn btn-default">Login</button>
+    </form> -->
+
+request get item and qty
+    [21/Sep/2015 15:46:25] "GET /cart/?item=iphone&qty=2 HTTP/1.1" 302 0
+    [21/Sep/2015 15:46:26] "GET / HTTP/1.1" 200 11877
+    iphone 2
+
+Provide default value to existing rows
+
+    You are trying to add a non-nullable field 'cart' to cartitem without a default; we can't do that (the database needs something to populate existing rows).
+    Please select a fix:
+     1) Provide a one-off default now (will be set on all existing rows)
+     2) Quit, and let me add a default in models.py
+    Select an option: 1
+    Please enter the default value now, as valid Python
+    The datetime and django.utils.timezone modules are available, so you can do e.g. timezone.now()
+    >>> 1
+
+
+
+    my_cart = Cart()
+
+   In [8]: my_cart.id
+
+   In [9]: my_cart.save()
+
+   In [10]: my_cart.id
+   Out[10]: 53
+   In [27]: var_blue = Variation()
+
+   In [28]: var_blue.product = Product.objects.get(title='T-shirt')
+
+   In [29]: var_blue.title = 'Blue'
+
+   In [30]: var_blue.price = 34
+
+   In [31]: var_blue.active = True
+
+   In [32]: var_blue.inventory = 10
+
+   In [33]: var_blue.save()
+
+   In [34]: my_cart
+   Out[34]: <Cart: 53>
+
+   In [35]: var_blue.save()
+
+   In [36]: var_blue.id
+   Out[36]: 33
+   cart_item = CartItem.objects.get_or_create(cart=my_cart, item=var_blue)[0]
+
+   In [45]: cart_item.quantity
+   Out[45]: 1
+
+   In [46]: cart_item.quantity = 4
+
+   In [47]: cart_item.save()
+
+   In [48]: cart_item.cart.items
+   Out[48]: <django.db.models.fields.related.ManyRelatedManager at 0x7f8c0d670950>
+
+   In [49]: cart_item.cart.items.all()
+   Out[49]: [<Variation: Blue>]
+
+   In [50]: cart_item.cart.items.count()
+   Out[50]: 1
+
+   In [51]: var_green = Variation()
+
+   In [52]: var_green.title = 'Green'
+
+   In [53]: var_green.pro
+   var_green.product     var_green.product_id
+
+   In [53]: var_green.product = Product.objects.get(title='T-shirt')
+
+   In [54]: var_green.price = 41
+
+   In [55]: var_green.sale_price = 36.99
+
+   In [56]: var_green.active = True
+
+   In [57]: var_green.inventory = 11
+
+   In [58]: var_green.save()
+
+   In [59]: var_green.id
+   Out[59]: 34
+
+   In [60]: my_cart.id
+   Out[60]: 53
+
+   In [61]: cart2_item = CartItem.objects.get_or_create(cart=my_cart, item=var_green)[0]
+
+   In [62]: cart2_item.id
+   Out[62]: 135
+
+   In [63]: cart2_item.save()
+
+   In [64]: cart2_item.cart.items.all()
+   Out[64]: [<Variation: Blue>, <Variation: Green>]
+
+   In [65]: cart2_item.cart.items.count()

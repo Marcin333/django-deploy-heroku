@@ -1,0 +1,1 @@
+Cart Items: <span class="badge" id="cart-count-badge">{% if not request.session.cart_item_count%}0{% else %}{{ request.session.cart_item_count }}{% endif %}</span>

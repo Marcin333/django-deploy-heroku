@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+	<div id="login-overlay" class="modal-dialog ">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">Select addreses</h4>
+          </div>
+          <div class="modal-body text-center">     
+			<form method="post" action="">{% csrf_token %}
+			  <div class="form-grup">
+			  {{form|crispy}}
+         </div>
+         <div class="form-group">
+           <input type="submit" value="Submit" class="btn btn-warning btn-lg">
+         </div>
+			</form>
+		</div>
+	  </div>
+	</div>
+ 
+{% endblock %}
+{# <div class="col-sm-4 col-sm-offset-4 text-center">
+  <legend class="lead">Select addreses</legend>
+  <form method="post" action="">{% csrf_token %}
+    <div class="form-grup">
+    {{form|crispy}}
+    <input type="submit" class="btn btn-lg btn-warning" value="Submit">
+    </div>
+  </form>
+ </div> #}

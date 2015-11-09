@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+<style>
+{% block custom_css %}
+
+{% endblock %}
+</style>
+
+{% block content %}
+  <p class="lead">Search for Product Result</p>
+{% include "products/products.html" with object_list=object_list %}
+{% endblock %}
+
+{# {% cycle '' '' '' '</div><div class="row">' %}
+/home/marcin/Desktop/Django/ecommerce2/static/media/placeholder.svg#}

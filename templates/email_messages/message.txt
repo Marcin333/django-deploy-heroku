@@ -1,0 +1,4 @@
+<p>Thank You For Your Order.</p>
+<p>Your order id is: <b>{{ order_id }} and will be send soon.</b></p>
+<p>Shipping order takes about 2-3 working days.</p>
+<p>Regards,</p><p>Team Django Ecommerce</p>
