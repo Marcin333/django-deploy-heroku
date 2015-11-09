@@ -1,6 +1,9 @@
 import os
-
 from django.conf import settings
+
+# specify the name of your settings module
+os.environ['DJANGO_SETTINGS_MODULE'] = 'ecommerce2.settings'
+
 
 DATABASES = settings.DATABASES
 
@@ -17,7 +20,7 @@ ALLOWED_HOSTS = ['*']
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 DEBUG = False
-TEMPLATE_DEBUG = True
+
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
