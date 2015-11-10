@@ -1,1 +1,2 @@
-web: sh -c "cd ecommerce2 && gunicorn wsgi"
+
+web: gunicorn ecommerce2.wsgi --log-file -
