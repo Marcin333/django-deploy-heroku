@@ -1,9 +1,9 @@
 import os
 from django.conf import settings
 
-PYTHONPATH_SETTINGS = 'ecommerce2.settings'
-# specify the name of your settings module
-os.environ['DJANGO_SETTINGS_MODULE'] = PYTHONPATH_SETTINGS
+# PYTHONPATH_SETTINGS = 'ecommerce2.settings'
+# # specify the name of your settings module
+# os.environ['DJANGO_SETTINGS_MODULE'] = PYTHONPATH_SETTINGS
 
 DATABASES = settings.DATABASES
 
