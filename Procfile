@@ -1,4 +1,4 @@
 
-web: gunicorn ecommerce2.wsgi  --log-file -
+web: env PYTHONPATH=$PYTHONPATH:$PWD/src gunicorn app:app
 
 
