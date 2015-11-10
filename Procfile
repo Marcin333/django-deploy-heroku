@@ -1,2 +1,1 @@
-
-web: gunicorn ecommerce2.wsgi --pythonpath ../ecommerce2 --log-file -
+web: sh -c "cd ecommerce2 && gunicorn ecommerce2.wsgi"
