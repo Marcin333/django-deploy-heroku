@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 import os
 import sys
-PYTHONPATH_SETTINGS = 'ecommerce2.settings'
 
 if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", PYTHONPATH_SETTINGS)
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ecommerce2.settings")
     
     from django.core.management import execute_from_command_line
 
