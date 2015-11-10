@@ -1,2 +1,2 @@
 
-web: gunicorn app.ecommerce2.wsgi  --log-file -
+web: gunicorn app/ecommerce2/wsgi  --log-file -
