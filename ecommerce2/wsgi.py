@@ -8,7 +8,7 @@ https://docs.djangoproject.com/en/1.8/howto/deployment/wsgi/
 """
 
 import os
-PYTHONPATH_SETTINGS = 'ecommerce2.settings'
+PYTHONPATH_SETTINGS = 'ecommerce2.settings.settings'
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", PYTHONPATH_SETTINGS)
 from django.core.wsgi import get_wsgi_application
 from whitenoise.django import DjangoWhiteNoise
