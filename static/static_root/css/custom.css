@@ -489,62 +489,7 @@ p#newsletter {
 }
 /**/
 .jumbotron {
-    {% if featured_image.image.url %}
-      background-image: url('{{featured_image.image.url}}') ;
-      background-size: cover;
-      background-color: black;
-      background-position: 0 -70px;
-      background-repeat: no-repeat;
-      {# if text_css_color #}
-      color:#{{featured_image.text_css_color}};
-      {# endif #}
-        .mg-image {
-          max-width:100%;
-          max-height:100%;
-          overflow: hidden;
-          background: #333333;
-        }
-
-        .thumbnail .caption {
-          padding: 9px;
-          color: #333;
-          position: absolute;
-          z-index: 100;
-          top: 100;
-          top: 20px;
-          color: white;
-          background-color: rgba(0, 0, 0, .5);
-          /* opacity: 0.5; 
-          /*width: 50%;*/
-          /*max-height: 25%;
-          font-size: 13px;*/
-        }
-        .thumbnail .caption a {
-          color: #18141C;
-        }
-
-        .thumbnail .caption p {
-          color: #18141C;
-        }
-        .thumbnail .caption h4 {
-          font-weight: 600;
-        }
-        
-        @media screen and (max-width: 770px) {
-            .thumbnail {
-                max-width:600px;
-          }
-        }
-        @media screen and (max-width: 300px) {
-          .thumbnail > caption > h5 {
-              font-size: 8px;
-          }
-        }
-      .thumbnail .caption p a {
-        text-align:right;
-      }
     
-    {% endif %}
   }
 /*product_detail style*/
   

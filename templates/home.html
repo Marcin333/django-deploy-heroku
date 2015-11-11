@@ -7,26 +7,7 @@
 {% endblock %}
 </style>
 {% block jumbotron %}
-{% if featured_image %}
-  <div class="jumbotron">
-    <div class="container">
-    <div class="row">
-      <div class='col-sm-6 {% if featured_image.text_right %}pull-right{% endif %}'>
-        <h1>{{featured_image.product.title}}</h1>
-        <p>{{featured_image.product.description}}</p>
-        <p>
-        <a class="btn btn-lg btn-primary" href="" role="button">Join Us &raquo;</a>
-        </p>
-      </div>
-      {% if not featured_image.image.url %}
-        <div class='col-sm-6'>
-         <img class="img-responsive" src="{{featured_image.image.url}}" alt="featured_image.title" />
-        </div>
-      </div>
-      {% endif %}
-    </div>
-  </div>
-{% endif %}
+
 {% endblock %}
 {# <h3>Recommended products</h3> #}
 {% block content %}
