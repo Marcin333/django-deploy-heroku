@@ -35,6 +35,5 @@ six==1.9.0
 sorl-thumbnail==12.3
 static3==0.6.1
 traitlets==4.0.0
-whitenoise==2.0.4
 static==0.4
 wsgiref==0.1.2

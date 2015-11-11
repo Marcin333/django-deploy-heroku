@@ -21,4 +21,4 @@ var/
 .installed.cfg
 *.egg
 
-
+#whitenoise==2.0.4
